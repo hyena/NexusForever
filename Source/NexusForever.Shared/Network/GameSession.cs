@@ -155,8 +155,12 @@ namespace NexusForever.Shared.Network
             {
                 message.Read(reader);
                 if (reader.BytesRemaining > 0)
+                {
                     log.Warn($"Failed to read entire contents of packet {packet.Opcode}");
-
+                    #region Debug
+                    log.Warn($"Additional content: {BitConverter.ToString(reader.ReadBytes(reader.BytesRemaining))}");
+                    #endregion
+                }
                 try
                 {
                     handlerInfo.Invoke(this, message);

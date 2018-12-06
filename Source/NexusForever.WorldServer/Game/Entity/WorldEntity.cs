@@ -7,11 +7,14 @@ using NexusForever.WorldServer.Game.Entity.Network.Command;
 using NexusForever.WorldServer.Game.Entity.Static;
 using NexusForever.WorldServer.Network.Message.Model;
 using NexusForever.WorldServer.Network.Message.Model.Shared;
+using NLog;
 
 namespace NexusForever.WorldServer.Game.Entity
 {
     public abstract class WorldEntity : GridEntity
     {
+        protected static readonly ILogger log = LogManager.GetCurrentClassLogger();
+
         public EntityType Type { get; }
         public Vector3 Rotation { get; set; } = Vector3.Zero;
         public Dictionary<Stat, StatValue> Stats { get; } = new Dictionary<Stat, StatValue>();
@@ -99,7 +102,10 @@ namespace NexusForever.WorldServer.Game.Entity
 
                 if (!includeSelf && player == this)
                     continue;
-
+                #region Debug
+                // TODO(hyena): Remove this debugging message when it's considered superfluous.
+                log.Debug($"Sending message to player {player.Name}");
+                #endregion
                 player.Session.EnqueueMessageEncrypted(message);
             }       
         }

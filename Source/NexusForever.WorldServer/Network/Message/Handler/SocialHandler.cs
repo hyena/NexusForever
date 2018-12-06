@@ -51,6 +51,7 @@ namespace NexusForever.WorldServer.Network.Message.Handler
         {
             uint emoteId = emote.EmoteId;
             uint standState = 0;
+            uint targetId = emote.TargetId;
             if (emoteId != 0)
             {
                 EmotesEntry entry = GameTableManager.Emotes.GetEntry(emoteId);
@@ -63,7 +64,7 @@ namespace NexusForever.WorldServer.Network.Message.Handler
             {
                 Guid = session.Player.Guid,
                 StandState = standState,
-                EmoteId = emoteId
+                EmoteId = emoteId,
             });
         }
 
